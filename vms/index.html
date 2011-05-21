@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>untitled</title>
+  <meta name="author" content="iNAzT">
+  <!-- Date: 2011-03-25 -->
+  <script type="text/javascript" src="https://www.google.com/jsapi?key=ABQIAAAAIGrUyMawOsMwPNQ1fDjKfRTO2GP6viO2ZGn3HxCyFOGqrcbBIhS4idv32G-DF41klrTYAqYQKbnAWQ"></script>
+</head>
+<body>
+
+    <div id="fb-root"></div> 
+  <div class ="cctv-wrapper"> 
+    <fb:like-box href="http://www.facebook.com/together.in.th" width="292" show_faces="false" stream="false" header="false"></fb:like-box> 
+  </div> 
+    <script> 
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId  : '102804773138815',
+          status : true, // check login status
+          cookie : true, // enable cookies to allow the server to access the session
+          xfbml  : true  // parse XFBML
+        });
+        //FB.ui({ method: 'feed', message: 'Facebook for Websites is super-cool'});
+        FB.Canvas.setAutoResize(90);
+runme();
+      }
+
+
+function runme() {
+    var query =
+      "SELECT post_id, attachment, likes, created_time, actor_id, message, permalink " +
+      "FROM stream " +
+      "WHERE source_id = {0} AND " +
+             "actor_id != '151383371550838' " +
+      "ORDER BY likes.count DESC " +
+      "LIMIT 256";
+    var posts = FB.Data.query(query, '153305968014537');
+    var users = FB.Data.query(
+       "SELECT uid, name " +
+       "FROM user " +
+       "WHERE uid in " +
+       "(SELECT actor_id from {0})", posts);
+ 
+     FB.Data.waitOn([posts, users], function() { 
+       console.log(posts);
+       FB.Array.forEach(posts.value, function(v, i) {
+         if (typeof console != undefined)
+         console.log(i, v, v.likes.count); 
+       });
+     });
+      /*
+      FB.login(function(response) {
+        if (response.session) {
+          if (response.perms) {
+            // user is logged in and granted some permissions.
+            // perms is a comma separated list of granted permissions
+            if (typeof console != undefined) 
+               console.log(response);
+          } else {
+            // user is logged in, but did not grant any permissions
+          }
+        } else {
+          // user is not logged in
+        }
+      }, {perms:'read_stream,publish_stream,offline_access'});
+    */ 
+}
+    </script> 
+
+<div class='vms-jsonp-example'>
+  <button type='button' id='show-vms-button'>reload ป้ายจราจรอัจฉริยะ</button> 
+  <div class='vms-jsonp-example-output'></div>
+</div>
+
+<script type="text/javascript"> 
+ google.load("jquery", "1.5.1");
+ google.setOnLoadCallback(OnLoad);
+
+  var service_endpoint = "http://www.together.in.th/drupal"; 
+
+  function OnLoad() {
+    $(function() {
+      display_vms(); 
+			$('#show-vms-button').click(function(e) {
+			$('.vms-jsonp-example-output').children().remove();
+			display_vms(); 
+			});  
+    }); 
+  } 
+
+  function display_vms() {
+    var loading = $("<div class='loading-vms'>Loading...</div>");
+
+    $('.vms-jsonp-example-output').append(loading);
+
+    $.getJSON(service_endpoint+ '/traffy/wrapper/getvms/?format=js&call=?&header=js', function(res) { 
+      $.each(res, function(k, v) { 
+        $('.vms-jsonp-example-output').append(vms_layout(k, v.name_th, v.pstop)); 
+      });
+      $(".vms-wrapper:nth-child(odd)").addClass("odd");
+      $(loading).remove();
+    }); 
+  }
+
+  function vms_layout(cid, name, congestion) {
+    var wrapper = $("<div class='vms-wrapper' />"); 
+    var info = $("<div class='vms-info' />");
+
+    var vms_image_src = service_endpoint + "/traffy/wrapper/getvmsimg?header=png&format=png&id=" + cid;
+    var vms_image = $("<img alt='vms-image' />").attr('src', vms_image_src); 
+
+    var name = $("<span class='vms-name' />").html(name);
+    var congestion_level = $("<span class='vms-congestion-level' />").html("ระดับความติดขัด " + congestion + "%");
+
+    info.append(name).append(congestion_level);
+    wrapper.append(info).append(vms_image);
+
+    return wrapper; 
+  }
+</script>
+
+
+<style type="text/css">
+    .vms-wrapper {
+       width: 270px;
+       background: #FFEFEF;
+       float: left;
+       padding-bottom: 20px;
+       margin: 2px;
+     }
+    .odd {
+      background: #FFEFCF;
+    }
+   .vms-congestion-level {
+      margin-left: 10px;
+    }
+   .loading {
+      padding: 20px
+    }
+</style>
+
+  <script type="text/javascript"> 
+      (function() {
+        var e = document.createElement('script');
+        e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js#xfbml=1';
+        e.async = true;
+        document.getElementById('fb-root').appendChild(e);
+      }());
+  </script> 
+</script> 
+ 
+<div class ="cctv-wrapper"> 
+  <fb:like-box href="http://www.facebook.com/together.in.th" width="292" show_faces="false" stream="false" header="false"></fb:like-box> 
+</div> 
+<fb:prompt-permission perms="email, offline, read_stream"> </fb:prompt-permission> 
+<fb:if-is-app-user> 
+    <fb:else> .  </fb:else> 
+</fb:if-is-app-user>
+<div class="site-footer">by <a target="_blank" href="/">http://www.together.in.th</a></div> 
+</body>
+</html>
