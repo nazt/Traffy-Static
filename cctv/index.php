@@ -22,7 +22,7 @@
 <body>
     <div id="fb-root"></div>
   <div class ="cctv-wrapper">
-	  <fb:like-box href="http://www.facebook.com/together.in.th" width="292" show_faces="false" stream="false" header="false"></fb:like-box>
+    <fb:like-box href="http://www.facebook.com/together.in.th" width="292" show_faces="false" stream="false" header="false"></fb:like-box>
   </div>
     <script>
       window.fbAsyncInit = function() {
@@ -32,7 +32,7 @@
           cookie : true, // enable cookies to allow the server to access the session
           xfbml  : true  // parse XFBML
         });
-	FB.Canvas.setAutoResize(90);
+  FB.Canvas.setAutoResize(90);
       }
     </script>
   <div class='cctv-jsonp-example'>
@@ -51,7 +51,7 @@
       $('#show-cctv-button').click(function(e) {
         $('.cctv-jsonp-example-output').children().remove();
         display_cctv();
-	FB.Canvas.setSize();
+        FB.Canvas.setSize();
       });
     });
   }
@@ -79,7 +79,7 @@
 
     var cctv_image_src = service_endpoint + "/traffy/wrapper/getcctvimg?&header=jpeg&format=jpeg&id=" + cid;
     var cctv_image_src_static = service_endpoint + "/traffy/generate/cctvimg/"+ cid + ".jpg";
-    var cctv_image = $("<img alt='cctv-image' />").attr('src', cctv_image_src_static);
+    var cctv_image = $("<img alt='cctv-image' cid = '"+ cid +"'/>").attr('src', cctv_image_src_static);
 
     var name = $("<span class='cctv-name' />").html(name);
     var lastupdate = $("<span class='cctv-lastupdate' />").html(time);
@@ -101,7 +101,7 @@
 </script>
 
 <div class ="cctv-wrapper">
-	<fb:like-box href="http://www.facebook.com/together.in.th" width="292" show_faces="false" stream="false" header="false"></fb:like-box>
+  <fb:like-box href="http://www.facebook.com/together.in.th" width="292" show_faces="false" stream="false" header="false"></fb:like-box>
 </div>
 <div class="site-footer">by <a target="_blank" href="/">http://www.together.in.th</a></div>
 </body>
