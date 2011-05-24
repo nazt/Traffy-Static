@@ -22,7 +22,7 @@
 <body>
     <div id="fb-root"></div>
   <div class ="cctv-wrapper">
-    <fb:like-box href="http://www.facebook.com/together.in.th" width="292" show_faces="false" stream="false" header="false"></fb:like-box>
+	<fb:like-box href="http://www.facebook.com/together.in.th" width="292" show_faces="false" stream="false" header="false"></fb:like-box>
   </div>
     <script>
       window.fbAsyncInit = function() {
@@ -32,7 +32,7 @@
           cookie : true, // enable cookies to allow the server to access the session
           xfbml  : true  // parse XFBML
         });
-  FB.Canvas.setAutoResize(90);
+	FB.Canvas.setAutoResize(90);
       }
     </script>
   <div class='cctv-jsonp-example'>
@@ -46,6 +46,31 @@
   var service_endpoint = "http://www.together.in.th/drupal";
 
   function OnLoad() {
+    $('.cctv-image').live('click', function(e) {
+          var self = $(this);
+          var siblings = self.siblings('.cctv-info');
+          var road = $('.cctv-name', siblings).text();
+          var last_update = $('.cctv-lastupdate', siblings).text();
+          //console.log('cid: ', self.attr('cid'), $('.cctv-name', siblings).text());
+          e.stopPropagation();
+          e.preventDefault();
+          var success_callback = function() {
+            var post_to = FB.getSession().uid || '153305968014537';
+            var text_to_post = road + " เมื่อ " + last_update;
+            var data_ui = prepare_data_ui(post_to, text_to_post, self.attr('cid'));
+            //console.log(data_ui);
+            FB.ui(data_ui, function(response) {
+              if (response && response.post_id) {
+                //console.log(response);
+              }
+              else {
+                //console.log(response);
+              }
+            });
+          }
+          doLogin(success_callback);
+    });
+
     $(function() {
       display_cctv();
       $('#show-cctv-button').click(function(e) {
@@ -53,6 +78,8 @@
         display_cctv();
         FB.Canvas.setSize();
       });
+
+
     });
   }
 
@@ -73,13 +100,28 @@
     });
   }
 
+  var prepare_data_ui = function(to, road_text, cid) {
+    var picture_path = 'http://www.together.in.th/drupal/traffy/generate/cctvimg/'+ cid +'.png';
+    var data_ui = {
+        method: 'feed',
+        name: 'แบ่งปันสภาพจราจร',
+        link: 'http://www.facebook.com/together.in.th?sk=app_203158633036737',
+        picture: picture_path,
+        caption: road_text,
+        message: '',
+        description: ' ',
+        to: to
+      };
+    return data_ui;
+  }
+
   function cctv_layout(cid, name, time) {
     var wrapper = $("<div class='cctv-wrapper' />");
     var info = $("<div class='cctv-info' />");
 
     var cctv_image_src = service_endpoint + "/traffy/wrapper/getcctvimg?&header=jpeg&format=jpeg&id=" + cid;
     var cctv_image_src_static = service_endpoint + "/traffy/generate/cctvimg/"+ cid + ".jpg";
-    var cctv_image = $("<img alt='cctv-image' cid = '"+ cid +"'/>").attr('src', cctv_image_src_static);
+    var cctv_image = $("<img alt='cctv-image' />").attr({'src': cctv_image_src_static, 'cid': cid, 'class': 'cctv-image' });
 
     var name = $("<span class='cctv-name' />").html(name);
     var lastupdate = $("<span class='cctv-lastupdate' />").html(time);
@@ -89,6 +131,23 @@
 
     return wrapper;
   }
+
+
+  var doLogin = function(success_cb) {
+    FB.login(function(response) {
+      if (response.session) {
+        if (response.perms) {
+          success_cb();
+        } else {
+          // user is logged in, but did not grant any permissions
+        }
+      } else {
+        // user is not logged in
+        //console.log('not loggedin');
+      }
+    }, {perms:'publish_stream'});
+  }
+
 </script>
   <script type="text/javascript">
       (function() {
@@ -101,7 +160,7 @@
 </script>
 
 <div class ="cctv-wrapper">
-  <fb:like-box href="http://www.facebook.com/together.in.th" width="292" show_faces="false" stream="false" header="false"></fb:like-box>
+	<fb:like-box href="http://www.facebook.com/together.in.th" width="292" show_faces="false" stream="false" header="false"></fb:like-box>
 </div>
 <div class="site-footer">by <a target="_blank" href="/">http://www.together.in.th</a></div>
 </body>
