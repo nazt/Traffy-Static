@@ -105,9 +105,19 @@
     $('.cctv-jsonp-example-output').append(loading);
 
     $.getJSON(service_endpoint+ '/traffy/wrapper/getcctv/?format=js&call=?&header=js', function(res) {
-      $.each(res, function(k, v) {
-        $('.cctv-jsonp-example-output').append(cctv_layout(k, v.name_th, v.lastupdate));
-      });
+      if (window.display_flag == 'all') {
+        $.each(res, function(k, v) {
+          $('.cctv-jsonp-example-output').append(cctv_layout(k, v.name_th, v.lastupdate));
+        });
+      }
+      else {
+        // app_id
+          var v = res[window.cctv_id];
+          if (typeof(v) !== "undefined") {
+            $('.cctv-jsonp-example-output').append(cctv_layout(window.cctv_id, v.name_th, v.lastupdate));
+            $('#show-all-cctv-button').css('display', 'inline');
+          }
+      }
 
       $('.cctv-wrapper').css('margin', '20px 20px');
       $('.cctv-lastupdate').css('margin-left', '10px');
