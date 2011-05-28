@@ -32,11 +32,13 @@
           cookie : true, // enable cookies to allow the server to access the session
           xfbml  : true  // parse XFBML
         });
-	FB.Canvas.setAutoResize(90);
+        FB.Canvas.setAutoResize(90);
       }
     </script>
   <div class='cctv-jsonp-example'>
-  <button type='button' id='show-cctv-button'>reload กล้อง CCTV</button>
+  <button type='button' id='show-all-cctv-button'>กล้อง CCTV ทั้งหมด</button>
+  <button type='button' id='reload-cctv-button'>reload กล้อง CCTV</button>
+  <div class='suggest-share-text'>* ร่วมแบ่งปันสภาพจราจร คลิ๊กที่รูปได้เลยจ้าาา</div>
   <div class='cctv-jsonp-example-output'></div>
 </div>
 <div class="cleaner"></div>
