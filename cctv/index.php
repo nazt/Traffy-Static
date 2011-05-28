@@ -197,7 +197,6 @@
     list($encoded_sig, $payload) = explode('.', $signed_request, 2);
     $data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
     if (!empty($data["user_id"])) {
-      //if($data["user_id"] == "896050346") {
         if (!empty($data['app_data'])) {
           $exp_data = explode(":", $data['app_data']);
           if ($exp_data[0] == 'cid' && is_numeric($exp_data[1])) {
@@ -208,7 +207,6 @@
         else {
             print "window.display_flag = 'all';";
         }
-      //}
     }
   }
 ?>
