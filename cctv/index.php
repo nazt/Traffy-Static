@@ -86,7 +86,7 @@
 
     $(function() {
       display_cctv();
-      $('#show-cctv-button').click(function(e) {
+      $('#reload-cctv-button').click(function(e) {
         $('.cctv-jsonp-example-output').children().remove();
         display_cctv();
         FB.Canvas.setSize();
