@@ -163,5 +163,29 @@
 	<fb:like-box href="http://www.facebook.com/together.in.th" width="292" show_faces="false" stream="false" header="false"></fb:like-box>
 </div>
 <div class="site-footer">by <a target="_blank" href="/">http://www.together.in.th</a></div>
+<script>
+<?php
+  print "window.display_flag = 'all';";
+  if (!empty($_REQUEST['signed_request'])) {
+    $signed_request = $_REQUEST['signed_request'];
+    list($encoded_sig, $payload) = explode('.', $signed_request, 2);
+    $data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
+    if (!empty($data["user_id"])) {
+      //if($data["user_id"] == "896050346") {
+        if (!empty($data['app_data'])) {
+          $exp_data = explode(":", $data['app_data']);
+          if ($exp_data[0] == 'cid' && is_numeric($exp_data[1])) {
+            print "window.display_flag = 'cid';";
+            print "window.cctv_id = ${exp_data[1]};";
+          }
+        }
+        else {
+            print "window.display_flag = 'all';";
+        }
+      //}
+    }
+  }
+?>
+</script>
 </body>
 </html>
