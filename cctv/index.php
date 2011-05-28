@@ -17,12 +17,23 @@
     .cleaner {
       clear: both;
     }
+    .cctv-image {
+      cursor: pointer;
+    }
+    #show-all-cctv-button {
+      display: none;
+    }
+    .suggest-share-text {
+      margin-top: 20px;
+      font-size: 0.8em;
+      color: tomato;
+    }
 </style>
 </head>
 <body>
     <div id="fb-root"></div>
   <div class ="cctv-wrapper">
-	<fb:like-box href="http://www.facebook.com/together.in.th" width="292" show_faces="false" stream="false" header="false"></fb:like-box>
+  <fb:like-box href="http://www.facebook.com/together.in.th" width="292" show_faces="false" stream="false" header="false"></fb:like-box>
   </div>
     <script>
       window.fbAsyncInit = function() {
