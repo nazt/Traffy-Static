@@ -114,11 +114,11 @@
   }
 
   var prepare_data_ui = function(to, road_text, cid) {
-    var picture_path = 'http://www.together.in.th/drupal/traffy/generate/cctvimg/'+ cid +'.png';
+    var picture_path = 'http://www.together.in.th/drupal/sites/default/files/traffy/cctv/'+ cid +'.jpg';
     var data_ui = {
         method: 'feed',
         name: 'แบ่งปันสภาพจราจร',
-        link: 'http://www.facebook.com/together.in.th?sk=app_203158633036737',
+        link: 'http://www.facebook.com/together.in.th?sk=app_203158633036737&app_data=cid:'+cid,
         picture: picture_path,
         caption: road_text,
         message: '',
