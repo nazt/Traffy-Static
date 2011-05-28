@@ -137,7 +137,7 @@
 
     var cctv_image_src = service_endpoint + "/traffy/wrapper/getcctvimg?&header=jpeg&format=jpeg&id=" + cid;
     var cctv_image_src_static = service_endpoint + "/traffy/generate/cctvimg/"+ cid + ".jpg";
-    var cctv_image = $("<img alt='cctv-image' />").attr({'src': cctv_image_src_static, 'cid': cid, 'class': 'cctv-image' });
+    var cctv_image = $("<img />").attr({'alt': name, 'src': cctv_image_src_static, 'cid': cid, 'class': 'cctv-image' });
 
     var name = $("<span class='cctv-name' />").html(name);
     var lastupdate = $("<span class='cctv-lastupdate' />").html(time);
