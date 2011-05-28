@@ -59,6 +59,9 @@
   var service_endpoint = "http://www.together.in.th/drupal";
 
   function OnLoad() {
+    $('#show-all-cctv-button').click(function(e) {
+      window.top.location = "http://www.facebook.com/together.in.th?sk=app_203158633036737";
+    });
     $('.cctv-image').live('click', function(e) {
           var self = $(this);
           var siblings = self.siblings('.cctv-info');
